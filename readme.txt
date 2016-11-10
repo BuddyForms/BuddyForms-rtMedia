@@ -1,5 +1,5 @@
 === BuddyForms rtMedia ===
-Contributors: svenl7
+Contributors: svenl77
 Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-rtmedia/
 Description: BuddyForms rtMedia Integration
