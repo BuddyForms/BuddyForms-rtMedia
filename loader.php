@@ -59,18 +59,19 @@ add_action('init', function(){
 	add_action( 'tgmpa_register', function(){
 
 		// Create the required plugins array
-		$plugins = array(
-			array(
-				'name'              => 'BuddyForms',
-				'slug'              => 'buddyforms',
-				'required'          => true,
-			),
-			array(
-				'name'              => 'rtMedia',
-				'slug'              => 'buddypress-media',
-				'required'          => true,
-			),
+		$plugins['buddypress-media'] = array(
+			'name'     => 'rtMedia',
+			'slug'     => 'buddypress-media',
+			'required' => true,
 		);
+
+		if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
+			$plugins['buddyforms'] = array(
+				'name'      => 'BuddyForms',
+				'slug'      => 'buddyforms',
+				'required'  => true,
+			);
+		}
 
 		$config = array(
 			'id'           => 'buddyforms-tgmpa',  // Unique ID for hashing notices for multiple instances of TGMPA.
