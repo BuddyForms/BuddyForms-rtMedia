@@ -55,34 +55,21 @@ function buddyforms_rtmedia_create_frontend_form_element( $form, $form_args ) {
 	switch ( $customfield['type'] ) {
 		case 'rtmedia':
 
-
-			// This is the Shortcode example from the documentation https://rtmedia.io/docs/features/upload/
-			// [rtmedia_uploader context="post" context_id="2" album_id="34" privacy="40"]
-
-			// Let us load the uploader
-			ob_start();
-
-				// Test using the shortcode
-				//echo do_shortcode('[rtmedia_uploader context="' . $post_type . '" context_id="' . $post_id . '"]');
 			$user_id = get_current_user_id();
-
-
-
 			if( $post_id == 0 ){
 				$context_id = substr( md5( time() * rand() ), 0, 10 );
 			} else {
 				$context_id = get_post_meta( $post_id, '_rtmedia_temp_context_id', true );
 			}
 
-			echo '<input name="_rtmedia_temp_context_id" type="hidden" value="' . $context_id . '">';
-			echo do_shortcode('[rtmedia_uploader context="' . $post_type . '" context_id="' . $context_id . '" media_type="all" media_author="' . $user_id . '"]');
-			echo '<hr>';
-			echo do_shortcode('[rtmedia_gallery global="false" context="' . $post_type . '" context_id="' . $context_id . '"  media_type="all" media_author="' . $user_id . '"]');
-
-			// Get the html
+			ob_start();
+				// echo '[rtmedia_uploader context="' . $post_type . '" context_id="' . $context_id . '" media_type="all" media_author="' . $user_id . '"]';
+				echo '<input name="_rtmedia_temp_context_id" type="hidden" value="' . $context_id . '">';
+				echo do_shortcode('[rtmedia_uploader context="' . $post_type . '" context_id="' . $context_id . '" media_type="all" media_author="' . $user_id . '"]');
+				echo '<hr>';
+				echo do_shortcode('[rtmedia_gallery global="false" context="' . $post_type . '" context_id="' . $context_id . '"  media_type="all" media_author="' . $user_id . '"]');
 			$rtmedia_uploader_html = ob_get_clean();
 
-			// Add the html to the form
 			$form->addElement( new Element_HTML( $rtmedia_uploader_html ) );
 
 			break;
@@ -107,7 +94,6 @@ function buddyforms_rtmedia_update_post_meta( $customfield, $post_id ) {
 
 		if( isset( $_POST['_rtmedia_temp_context_id'] ) ){
 
-
 			update_post_meta($post_id, '_rtmedia_temp_context_id', $_POST['_rtmedia_temp_context_id'] );
 
 			$rt_attr = array(
@@ -121,9 +107,7 @@ function buddyforms_rtmedia_update_post_meta( $customfield, $post_id ) {
 			if ( $results ) {
 				foreach( $results as $image ) {
 					//update_rtmedia_meta( $image->media_id, '_context_id', $post_id );
-
-
-					$media_post = wp_update_post( array(
+					wp_update_post( array(
 						'ID'            => $image->media_id,
 						'post_parent'   => $post_id,
 					), true );
