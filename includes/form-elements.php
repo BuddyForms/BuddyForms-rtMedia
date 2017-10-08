@@ -75,20 +75,9 @@ function buddyforms_rtmedia_create_frontend_form_element( $form, $form_args ) {
 			}
 
 			echo '<input name="_rtmedia_temp_context_id" type="hidden" value="' . $context_id . '">';
-
-
-			echo do_shortcode('[rtmedia_uploader context="' . $post_type . '" context_id="'.$context_id.'" media_type="all" media_author="'.$user_id.'"]');
-
-
-				echo '<hr>';
-
-				echo do_shortcode('[rtmedia_gallery global="false" context="' . $post_type . '" context_id="'.$context_id.'"  media_type="all" media_author="'.$user_id.'"]');
-				
-
-
-
-				// Test using the function
-				//echo rtmedia_uploader(array('context' => 'profile', 'context_id' => 'profile', 'album_id' => 3));
+			echo do_shortcode('[rtmedia_uploader context="' . $post_type . '" context_id="' . $context_id . '" media_type="all" media_author="' . $user_id . '"]');
+			echo '<hr>';
+			echo do_shortcode('[rtmedia_gallery global="false" context="' . $post_type . '" context_id="' . $context_id . '"  media_type="all" media_author="' . $user_id . '"]');
 
 			// Get the html
 			$rtmedia_uploader_html = ob_get_clean();
